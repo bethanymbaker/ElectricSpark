@@ -200,6 +200,9 @@
 				LastUpgradeCheck = 0500;
 				ORGANIZATIONNAME = "Bethany Simmons";
 				TargetAttributes = {
+					699615C918400E9D0090E199 = {
+						DevelopmentTeam = F32458VEJD;
+					};
 					699615EA18400E9D0090E199 = {
 						TestTargetID = 699615C918400E9D0090E199;
 					};
@@ -379,6 +382,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "ElectricSpark/ElectricSpark-Prefix.pch";
 				INFOPLIST_FILE = "ElectricSpark/ElectricSpark-Info.plist";
@@ -392,6 +396,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "ElectricSpark/ElectricSpark-Prefix.pch";
 				INFOPLIST_FILE = "ElectricSpark/ElectricSpark-Info.plist";

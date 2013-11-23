@@ -7,12 +7,20 @@
 //
 
 #import "ElectricSparkAppDelegate.h"
+#import "ElectricSparkViewController.h"
+
 
 @implementation ElectricSparkAppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    // Override point for customization after application launch.
+    // Make a window and a viewcontroller
+    self.window = [[UIWindow alloc]initWithFrame:[[UIScreen mainScreen]bounds]];
+    self.electricShockViewController = [[ElectricSparkViewController alloc]initWithNibName:@"ElectricSparkViewController" bundle:Nil];
+    self.window.rootViewController = self.electricShockViewController;
+    
+    [self.window makeKeyAndVisible];
+    
     return YES;
 }
 							

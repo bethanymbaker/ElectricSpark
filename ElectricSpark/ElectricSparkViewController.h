@@ -9,5 +9,5 @@
 #import <UIKit/UIKit.h>
 
 @interface ElectricSparkViewController : UIViewController
-
+@property (strong, nonatomic) UIView *view;
 @end

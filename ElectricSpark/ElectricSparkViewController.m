@@ -13,6 +13,17 @@
 @end
 
 @implementation ElectricSparkViewController
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+{
+    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    if (self) {
+        self.view = [[UIView alloc]initWithFrame:[[UIScreen mainScreen]bounds]];
+        self.view.backgroundColor = [UIColor magentaColor];
+        return self;
+    } else {
+        return nil;
+    }
+}
 
 - (void)viewDidLoad
 {
