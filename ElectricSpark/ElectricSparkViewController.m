@@ -7,9 +7,10 @@
 //
 
 #import "ElectricSparkViewController.h"
+#import "ElectricSparkView.h"
+#import "Electron.h"
 
 @interface ElectricSparkViewController ()
-
 @end
 
 @implementation ElectricSparkViewController
@@ -17,14 +18,12 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        self.view = [[UIView alloc]initWithFrame:[[UIScreen mainScreen]bounds]];
-        self.view.backgroundColor = [UIColor magentaColor];
+        self.view = [[ElectricSparkView alloc]initWithFrame:[[UIScreen mainScreen]bounds]];
         return self;
     } else {
         return nil;
     }
 }
-
 - (void)viewDidLoad
 {
     [super viewDidLoad];
