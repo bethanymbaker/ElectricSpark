@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		69089840184104860060DB83 /* Electron.m in Sources */ = {isa = PBXBuildFile; fileRef = 6908983F184104860060DB83 /* Electron.m */; };
 		69089843184265F00060DB83 /* ElectricSparkView.m in Sources */ = {isa = PBXBuildFile; fileRef = 69089842184265F00060DB83 /* ElectricSparkView.m */; };
+		690898491842C8EB0060DB83 /* Vector2D.m in Sources */ = {isa = PBXBuildFile; fileRef = 690898481842C8EB0060DB83 /* Vector2D.m */; };
 		699615CE18400E9D0090E199 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 699615CD18400E9D0090E199 /* Foundation.framework */; };
 		699615D018400E9D0090E199 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 699615CF18400E9D0090E199 /* CoreGraphics.framework */; };
 		699615D218400E9D0090E199 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 699615D118400E9D0090E199 /* UIKit.framework */; };
@@ -40,6 +41,8 @@
 		6908983F184104860060DB83 /* Electron.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Electron.m; sourceTree = "<group>"; };
 		69089841184265F00060DB83 /* ElectricSparkView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ElectricSparkView.h; sourceTree = "<group>"; };
 		69089842184265F00060DB83 /* ElectricSparkView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ElectricSparkView.m; sourceTree = "<group>"; };
+		690898471842C8EB0060DB83 /* Vector2D.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Vector2D.h; sourceTree = "<group>"; };
+		690898481842C8EB0060DB83 /* Vector2D.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Vector2D.m; sourceTree = "<group>"; };
 		699615CA18400E9D0090E199 /* ElectricSpark.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ElectricSpark.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		699615CD18400E9D0090E199 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		699615CF18400E9D0090E199 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -119,6 +122,8 @@
 			isa = PBXGroup;
 			children = (
 				699615DC18400E9D0090E199 /* ElectricSparkAppDelegate.h */,
+				690898471842C8EB0060DB83 /* Vector2D.h */,
+				690898481842C8EB0060DB83 /* Vector2D.m */,
 				699615DD18400E9D0090E199 /* ElectricSparkAppDelegate.m */,
 				699615DF18400E9D0090E199 /* Main.storyboard */,
 				699615E218400E9D0090E199 /* ElectricSparkViewController.h */,
@@ -267,6 +272,7 @@
 				69089840184104860060DB83 /* Electron.m in Sources */,
 				699615DA18400E9D0090E199 /* main.m in Sources */,
 				69089843184265F00060DB83 /* ElectricSparkView.m in Sources */,
+				690898491842C8EB0060DB83 /* Vector2D.m in Sources */,
 				699615DE18400E9D0090E199 /* ElectricSparkAppDelegate.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
