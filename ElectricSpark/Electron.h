@@ -7,12 +7,17 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "Vector2D.h"
 
 @interface Electron : NSObject
 
-@property (readonly) CGPoint locationOfTouch;
-@property (readonly) NSNumber *mass;
-@property (readonly) NSNumber *charge;
-@property CGPoint currentLocation;
+//@property (readonly) CGPoint locationOfTouch;
+@property (readonly) float mass;
+@property (readonly) float charge;
+@property Vector2D *r;
+@property Vector2D *forceVector;
+@property Vector2D *velocity;
 - (id)initWithLocationOfTouch:(CGPoint)locationOfTouch;
+- (void)calculateForceFromElectron:(Electron *)other;
+- (void)calculateDisplacementWithDeltaT:(float)deltaT;
 @end

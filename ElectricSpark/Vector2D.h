@@ -11,12 +11,10 @@
 #define kHalfPI 1.5707963267948966192313216916398f
 #define kTwoPI 2.0f*kPI
 
-@interface Vector2D : NSObject <NSCopying>
-{
-@public
-    float x;
-    float y;
-}
+@interface Vector2D : NSObject
+@property float x;
+@property float y;
+
 
 // Class Methods
 
