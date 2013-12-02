@@ -67,7 +67,7 @@
             if (![e1 isEqual:e2]) {
                 Vector2D *deltaR = [Vector2D sub:e2.r with:e1.r];
                 float length = [deltaR length];
-                float magnitude = - ( e1.charge * e2.charge ) / (length*length*length);
+                float magnitude = - 10000.0 * ( e1.charge * e2.charge ) / (length*length*length);
                 Vector2D *force = [Vector2D mult:deltaR with:magnitude];
                 [e1.forceVector add:force];
             }

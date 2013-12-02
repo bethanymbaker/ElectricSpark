@@ -14,8 +14,8 @@
 {
     self = [super init];
     if (self) {
-        _charge = -100.0f;
-        _mass = 0.5f;
+        _charge = -1.0f;
+        _mass = 1.0f;
         _r = [[Vector2D alloc]initWithX:locationOfTouch.x Y:locationOfTouch.y];
         _forceVector = [[Vector2D alloc]init];
         _velocity = [[Vector2D alloc]init];
