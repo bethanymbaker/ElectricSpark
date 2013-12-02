@@ -25,14 +25,17 @@
     if (self) {
         self.backgroundColor = [UIColor magentaColor];
         _listOfElectrons = [[NSMutableArray alloc]init];
-        _deltaT = 0.2f;
+        _deltaT = 0.5f;
         [self animate];
     }
     return self;
 }
 - (void)animate
 {
-    
+    [NSTimer scheduledTimerWithTimeInterval:_deltaT target:self selector:@selector(animate) userInfo:NULL repeats:NO];
+    [self calculateElectronForces];
+    [self calculateDisplacements];
+    [self setNeedsDisplay];
 }
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
@@ -43,14 +46,11 @@
     if (electron) {
         [_listOfElectrons addObject:electron];
         [self setNeedsDisplay];
-        [self calculateElectronForces];
-        [self calculateDisplacements];
-        [self setNeedsDisplay];
     }
 }
 - (void)calculateDisplacements
 {
-    for (Electron *electron in self.listOfElectrons) {
+    for (Electron *electron in _listOfElectrons) {
         Vector2D *initialDisplacement = electron.r;
         Vector2D *initialVelocity = electron.velocity;
         Vector2D *initialAcceleration = [electron.forceVector div:electron.mass];
