@@ -131,35 +131,35 @@ static Vector2D* xy = nil;
     self = [super init];
     if(nil != self)
     {
-        x = nx;
-        y = ny;
+        _x = nx;
+        _y = ny;
     }
     return self;
 }
 
 - (Vector2D*) copyWithZone:(NSZone *)zone
 {
-    return [[Vector2D alloc] initWithX:x Y:y];
+    return [[Vector2D alloc] initWithX:_x Y:_y];
 }
 
 - (NSString*) description
 {
-    return [NSString stringWithFormat:@"<%f, %f>", x, y];
+    return [NSString stringWithFormat:@"<%f, %f>", _x, _y];
 }
 
 - (float) length
 {
-    return sqrt(x*x + y*y);
+    return sqrt(_x*_x + _y*_y);
 }
 
 - (float) lengthSquared
 {
-    return (x*x + y*y);
+    return (_x*_x + _y*_y);
 }
 
 - (BOOL) isEqual:(Vector2D*)other
 {
-    if (areEqual(x, other->x) && areEqual(y, other->y))
+    if (areEqual(_x, other.x) && areEqual(_y, other.y))
     {
         return YES;
     }
@@ -171,36 +171,36 @@ static Vector2D* xy = nil;
 
 - (BOOL) isZero
 {
-    return isZero(x*x + y*y);
+    return isZero(_x*_x + _y*_y);
 }
 
 - (Vector2D*) clean
 {
-    if(isZero(x)) x = 0.0f;
-    if(isZero(y)) y = 0.0f;
+    if(isZero(_x)) _x = 0.0f;
+    if(isZero(_y)) _y = 0.0f;
     return self;
 }
 
 - (Vector2D*) zero
 {
-    x = 0.0f;
-    y = 0.0f;
+    _x = 0.0f;
+    _y = 0.0f;
     return self;
 }
 
 - (Vector2D*) normalize
 {
-    float lengthsq = x*x + y*y;
+    float lengthsq = _x*_x + _y*_y;
     if (isZero(lengthsq))
     {
-        x = 0.0f;
-        y = 0.0f;
+        _x = 0.0f;
+        _y = 0.0f;
     }
     else
     {
         float factor = 1.0f / sqrt(lengthsq);
-        x *= factor;
-        y *= factor;
+        _x *= factor;
+        _y *= factor;
     }
     return self;
 }
@@ -212,45 +212,45 @@ static Vector2D* xy = nil;
 
 - (Vector2D*) add:(Vector2D*)other
 {
-    x += other->x;
-    y += other->y;
+    _x+=other.x;
+    _y+=other.y;
     return self;
 }
 
 - (Vector2D*) sub:(Vector2D*)other
 {
-    x -= other->x;
-    y -= other->y;
+    _x-=other.x;
+    _y-=other.y;
     return self;
 }
 
 - (Vector2D*) mult:(float)scalar
 {
-    x *= scalar;
-    y *= scalar;
+    _x*=scalar;
+    _y*=scalar;
     return self;
 }
 
 - (Vector2D*) div:(float)scalar
 {
-    x /= scalar;
-    y /= scalar;
+    _x /= scalar;
+    _y /= scalar;
     return self;
 }
 
 - (float) dot:(Vector2D*)other
 {
-    return (x*other->x + y*other->y);
+    return (_x*other.x + _y*other.y);
 }
 
 - (Vector2D*) perp
 {
-    return [Vector2D newWithX:-y Y:x];
+    return [Vector2D newWithX:-_y Y:_x];
 }
 
 - (float) perpDot:(Vector2D*)other
 {
-    return (x*other->y - y*other->x);
+    return (_x*other.y - _y*other.x);
 }
 
 @end

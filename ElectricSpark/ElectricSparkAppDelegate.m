@@ -21,10 +21,10 @@
     self.window.rootViewController = self.electricShockViewController;
     
     // Check Vector2D works
-    Vector2D *vector1 = [[Vector2D alloc]initWithX:1.0 Y:2.0];
-    Vector2D *vector2 = [[Vector2D alloc]initWithX:2.0 Y:3.0];
-    float dotProduct = [Vector2D dot:vector1 with:vector2];
-    NSLog(@"The dot product is %f",dotProduct);
+    //Vector2D *vector1 = [[Vector2D alloc]initWithX:1.0 Y:2.0];
+    //Vector2D *vector2 = [[Vector2D alloc]initWithX:2.0 Y:3.0];
+    //float dotProduct = [Vector2D dot:vector1 with:vector2];
+    //NSLog(@"The dot product is %f",dotProduct);
 
     [self.window makeKeyAndVisible];
     
