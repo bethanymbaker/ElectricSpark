@@ -24,6 +24,7 @@
 		699615EF18400E9D0090E199 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 699615D118400E9D0090E199 /* UIKit.framework */; };
 		699615F718400E9D0090E199 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 699615F518400E9D0090E199 /* InfoPlist.strings */; };
 		699615F918400E9D0090E199 /* ElectricSparkTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 699615F818400E9D0090E199 /* ElectricSparkTests.m */; };
+		69C3A9EC184D4ED8009A7DE4 /* ElectricSparkSimulation.png in Resources */ = {isa = PBXBuildFile; fileRef = 69C3A9EB184D4ED8009A7DE4 /* ElectricSparkSimulation.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -62,6 +63,7 @@
 		699615F418400E9D0090E199 /* ElectricSparkTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "ElectricSparkTests-Info.plist"; sourceTree = "<group>"; };
 		699615F618400E9D0090E199 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		699615F818400E9D0090E199 /* ElectricSparkTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ElectricSparkTests.m; sourceTree = "<group>"; };
+		69C3A9EB184D4ED8009A7DE4 /* ElectricSparkSimulation.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ElectricSparkSimulation.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -121,6 +123,7 @@
 		699615D318400E9D0090E199 /* ElectricSpark */ = {
 			isa = PBXGroup;
 			children = (
+				69C3A9EB184D4ED8009A7DE4 /* ElectricSparkSimulation.png */,
 				699615DC18400E9D0090E199 /* ElectricSparkAppDelegate.h */,
 				690898471842C8EB0060DB83 /* Vector2D.h */,
 				690898481842C8EB0060DB83 /* Vector2D.m */,
@@ -250,6 +253,7 @@
 				699615E618400E9D0090E199 /* Images.xcassets in Resources */,
 				699615D818400E9D0090E199 /* InfoPlist.strings in Resources */,
 				699615E118400E9D0090E199 /* Main.storyboard in Resources */,
+				69C3A9EC184D4ED8009A7DE4 /* ElectricSparkSimulation.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
