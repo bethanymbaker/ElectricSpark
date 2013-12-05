@@ -11,7 +11,7 @@
 #define kHalfPI 1.5707963267948966192313216916398f
 #define kTwoPI 2.0f*kPI
 
-@interface Vector2D : NSObject
+@interface Vector2D : NSObject <NSCopying>
 @property float x;
 @property float y;
 
