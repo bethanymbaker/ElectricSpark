@@ -18,7 +18,5 @@
 @property Vector2D *velocity;
 @property UIColor *color;
 - (id)initWithLocationOfTouch:(CGPoint)locationOfTouch;
-- (void)calculateForceFromParticle:(Particle *)other;
-- (void)calculateDisplacementWithDeltaT:(float)deltaT;
 
 @end
