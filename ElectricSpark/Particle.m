@@ -7,7 +7,6 @@
 //
 
 #import "Particle.h"
-#import "Vector2D.h"
 
 @implementation Particle
 - (id)initWithLocationOfTouch:(CGPoint)locationOfTouch

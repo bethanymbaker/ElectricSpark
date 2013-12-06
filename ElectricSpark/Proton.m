@@ -7,13 +7,13 @@
 //
 
 #import "Proton.h"
-#import "Particle.h"
 
 @implementation Proton
 - (id)initWithLocationOfTouch:(CGPoint)locationOfTouch
 {
     self = [super initWithLocationOfTouch:locationOfTouch];
     if (self) {
+        self.mass = 1000.0f;
         self.charge = 1.0f;
         self.color = [UIColor redColor];
     }
