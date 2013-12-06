@@ -7,7 +7,6 @@
 //
 
 #import "Electron.h"
-#import "Particle.h"
 
 @implementation Electron
 - (id)initWithLocationOfTouch:(CGPoint)locationOfTouch

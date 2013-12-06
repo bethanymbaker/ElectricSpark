@@ -8,7 +8,6 @@
 
 #import "ElectricSparkViewController.h"
 #import "ElectricSparkView.h"
-#import "Electron.h"
 
 @interface ElectricSparkViewController ()
 @end

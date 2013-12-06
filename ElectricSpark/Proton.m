@@ -7,7 +7,6 @@
 //
 
 #import "Proton.h"
-#import "Particle.h"
 
 @implementation Proton
 - (id)initWithLocationOfTouch:(CGPoint)locationOfTouch
