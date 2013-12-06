@@ -9,6 +9,7 @@
 #import "Particle.h"
 
 @implementation Particle
+
 - (id)initWithLocationOfTouch:(CGPoint)locationOfTouch
 {
     self = [super init];
@@ -24,26 +25,5 @@
         return nil;
     }
 }
-- (void)calculateForceFromParticle:(Particle *)other
-{
-    if ([self isEqual:other]) {
-        
-    } else {
-        Vector2D *deltaR = [other.displacement sub:self.displacement];
-        float length = [deltaR length];
-        float magnitude = - ( self.charge * other.charge ) / (length*length*length);
-        Vector2D *force = [[Vector2D alloc]initWithX:magnitude*deltaR.x Y:magnitude*deltaR.y];
-        _force = [_force add:force];
-    }
-}
-- (void)calculateDisplacementWithDeltaT:(float)deltaT
-{
-    Vector2D *initialDisplacement = self.displacement;
-    Vector2D *initialVelocity = self.velocity;
-    Vector2D *initialAcceleration = [self.force div:self.mass];
-    Vector2D *finalDisplacement = [[initialDisplacement add:[initialVelocity mult:deltaT]] add:[initialAcceleration mult:0.5f*deltaT*deltaT]];
-    Vector2D *finalVelocity = [initialVelocity add:[initialAcceleration mult:deltaT]];
-    self.displacement = finalDisplacement;
-    self.velocity = finalVelocity;
-}
+
 @end
