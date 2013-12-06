@@ -1,16 +1,14 @@
 //
-//  Electron.h
+//  Proton.h
 //  ElectricSpark
 //
-//  Created by Bethany Simmons on 11/23/13.
+//  Created by Bethany Simmons on 12/5/13.
 //  Copyright (c) 2013 Bethany Simmons. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
-#import "Vector2D.h"
 #import "Particle.h"
 
-@interface Electron : Particle
+@interface Proton : Particle
 @property float charge;
 @property UIColor *color;
 @end

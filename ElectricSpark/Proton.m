@@ -1,21 +1,21 @@
 //
-//  Electron.m
+//  Proton.m
 //  ElectricSpark
 //
-//  Created by Bethany Simmons on 11/23/13.
+//  Created by Bethany Simmons on 12/5/13.
 //  Copyright (c) 2013 Bethany Simmons. All rights reserved.
 //
 
-#import "Electron.h"
+#import "Proton.h"
 #import "Particle.h"
 
-@implementation Electron
+@implementation Proton
 - (id)initWithLocationOfTouch:(CGPoint)locationOfTouch
 {
     self = [super initWithLocationOfTouch:locationOfTouch];
     if (self) {
-        self.charge = -1.0f;
-        self.color = [UIColor yellowColor];
+        self.charge = 1.0f;
+        self.color = [UIColor redColor];
     }
     return self;
 }

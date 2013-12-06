@@ -25,6 +25,8 @@
 		699615F718400E9D0090E199 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 699615F518400E9D0090E199 /* InfoPlist.strings */; };
 		699615F918400E9D0090E199 /* ElectricSparkTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 699615F818400E9D0090E199 /* ElectricSparkTests.m */; };
 		69C3A9EC184D4ED8009A7DE4 /* ElectricSparkSimulation.png in Resources */ = {isa = PBXBuildFile; fileRef = 69C3A9EB184D4ED8009A7DE4 /* ElectricSparkSimulation.png */; };
+		69C3A9EF184D5403009A7DE4 /* Particle.m in Sources */ = {isa = PBXBuildFile; fileRef = 69C3A9EE184D5403009A7DE4 /* Particle.m */; };
+		69C3AA0C18513C37009A7DE4 /* Proton.m in Sources */ = {isa = PBXBuildFile; fileRef = 69C3AA0B18513C37009A7DE4 /* Proton.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -64,6 +66,10 @@
 		699615F618400E9D0090E199 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		699615F818400E9D0090E199 /* ElectricSparkTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ElectricSparkTests.m; sourceTree = "<group>"; };
 		69C3A9EB184D4ED8009A7DE4 /* ElectricSparkSimulation.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ElectricSparkSimulation.png; sourceTree = "<group>"; };
+		69C3A9ED184D5403009A7DE4 /* Particle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Particle.h; sourceTree = "<group>"; };
+		69C3A9EE184D5403009A7DE4 /* Particle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Particle.m; sourceTree = "<group>"; };
+		69C3AA0A18513C37009A7DE4 /* Proton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Proton.h; sourceTree = "<group>"; };
+		69C3AA0B18513C37009A7DE4 /* Proton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Proton.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -137,6 +143,10 @@
 				6908983F184104860060DB83 /* Electron.m */,
 				69089841184265F00060DB83 /* ElectricSparkView.h */,
 				69089842184265F00060DB83 /* ElectricSparkView.m */,
+				69C3A9ED184D5403009A7DE4 /* Particle.h */,
+				69C3A9EE184D5403009A7DE4 /* Particle.m */,
+				69C3AA0A18513C37009A7DE4 /* Proton.h */,
+				69C3AA0B18513C37009A7DE4 /* Proton.m */,
 			);
 			path = ElectricSpark;
 			sourceTree = "<group>";
@@ -274,8 +284,10 @@
 			files = (
 				699615E418400E9D0090E199 /* ElectricSparkViewController.m in Sources */,
 				69089840184104860060DB83 /* Electron.m in Sources */,
+				69C3A9EF184D5403009A7DE4 /* Particle.m in Sources */,
 				699615DA18400E9D0090E199 /* main.m in Sources */,
 				69089843184265F00060DB83 /* ElectricSparkView.m in Sources */,
+				69C3AA0C18513C37009A7DE4 /* Proton.m in Sources */,
 				690898491842C8EB0060DB83 /* Vector2D.m in Sources */,
 				699615DE18400E9D0090E199 /* ElectricSparkAppDelegate.m in Sources */,
 			);
