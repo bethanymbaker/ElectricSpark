@@ -72,7 +72,7 @@
 }
 - (void)animate
 {
-    [NSTimer scheduledTimerWithTimeInterval:1.0/50.0f target:self selector:@selector(animate) userInfo:NULL repeats:NO];
+    [NSTimer scheduledTimerWithTimeInterval:1.0/20.0*_deltaT target:self selector:@selector(animate) userInfo:NULL repeats:NO];
     [self calculateForces];
     [self calculateDisplacements];
     [self setNeedsDisplay];
