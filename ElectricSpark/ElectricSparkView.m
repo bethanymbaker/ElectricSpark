@@ -91,15 +91,21 @@
 }
 - (void)calculateForces
 {
-    for (Particle *p1 in _listOfParticles) {
-        for (Particle *p2 in _listOfParticles) {
-            if (![p1 isEqual:p2]) {
-                Vector2D *deltaR = [Vector2D sub:p2.displacement with:p1.displacement];
-                float length = [deltaR length];
-                float magnitude = - 10000.0 * ( p1.charge * p2.charge ) / (length*length*length);
-                Vector2D *force = [Vector2D mult:deltaR with:magnitude];
-                [p1.force add:force];
-            }
+    [self calculateElectrostaticForces];
+}
+- (void)calculateElectrostaticForces
+{
+    int numParticles = [_listOfParticles count];
+    for (int i = 0; i<numParticles; i++) {
+        for (int j = i+1; j<numParticles; j++) {
+            Particle *p1 = [_listOfParticles objectAtIndex:i];
+            Particle *p2 = [_listOfParticles objectAtIndex:j];
+            Vector2D *deltaR = [Vector2D sub:p2.displacement with:p1.displacement];
+            float length = [deltaR length];
+            float magnitude = - 10000.0 * ( p1.charge * p2.charge ) / (length*length*length);
+            Vector2D *force = [Vector2D mult:deltaR with:magnitude];
+            [p1.force add:force];
+            [p2.force add:[Vector2D mult:force with:-1.0f]];
         }
     }
 }
