@@ -20,7 +20,6 @@
 @property (nonatomic) UITapGestureRecognizer *singleTapRecognizer;
 @property (nonatomic) UITapGestureRecognizer *doubleTapRecognizer;
 @property (nonatomic) UILongPressGestureRecognizer *longPressRecognizer;
-- (void)drawParticles;
 @end
 
 @implementation ElectricSparkView
