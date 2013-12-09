@@ -20,6 +20,8 @@
         _displacement = [[Vector2D alloc]initWithX:locationOfTouch.x Y:locationOfTouch.y];
         _force = [[Vector2D alloc]init];
         _velocity = [[Vector2D alloc]init];
+        _electrostaticForce = [[Vector2D alloc]init];
+        _repulsiveForce = [[Vector2D alloc]init];
         return self;
     } else {
         return nil;
