@@ -11,6 +11,7 @@
 #import "Proton.h"
 #import "Vector2D.h"
 #import "Particle.h"
+#import "Neutron.h"
 
 @interface ElectricSparkView ()
 @property (nonatomic) CGPoint locationOfTouch;
@@ -18,6 +19,7 @@
 @property (nonatomic) float deltaT;
 @property (nonatomic) UITapGestureRecognizer *singleTapRecognizer;
 @property (nonatomic) UITapGestureRecognizer *doubleTapRecognizer;
+@property (nonatomic) UILongPressGestureRecognizer *longPressRecognizer;
 - (void)drawParticles;
 @end
 
@@ -39,12 +41,25 @@
         
         [_singleTapRecognizer requireGestureRecognizerToFail:_doubleTapRecognizer];
         
+        _longPressRecognizer = [[UILongPressGestureRecognizer alloc]initWithTarget:self action:@selector(addNeutron:)];
+        [_singleTapRecognizer requireGestureRecognizerToFail:_longPressRecognizer];
+        
         [self addGestureRecognizer:_singleTapRecognizer];
         [self addGestureRecognizer:_doubleTapRecognizer];
+        [self addGestureRecognizer:_longPressRecognizer];
         [self setMultipleTouchEnabled:YES];
         [self animate];
     }
     return self;
+}
+- (void)addNeutron:(UILongPressGestureRecognizer *)recognizer
+{
+    CGPoint location = [recognizer locationInView:[recognizer.view self]];
+    Neutron *neutron = [[Neutron alloc]initWithLocationOfTouch:location];
+    if (neutron) {
+        [_listOfParticles addObject:neutron];
+        [self setNeedsDisplay];
+    }
 }
 - (void)addElectron:(UITapGestureRecognizer *)recognizer
 {
@@ -91,21 +106,58 @@
 }
 - (void)calculateForces
 {
+    float strongForce = 100.0f;
+    float electrostaticForceWeight = strongForce * 1.0f/137.0f;
+    float repulsiveForceWeight = strongForce * 0.000001f;
+    
     [self calculateElectrostaticForces];
+    [self calculateRepulsiveForces];
+    for (Particle *particle in _listOfParticles) {
+        [particle.force add:[particle.electrostaticForce mult:electrostaticForceWeight]];
+        [particle.force add:[particle.repulsiveForce mult:repulsiveForceWeight]];
+    }
 }
 - (void)calculateElectrostaticForces
 {
+    //CGRect viewRect = [[UIScreen mainScreen]bounds];
+    //int height = viewRect.size.height;
+    //int width = viewRect.size.height;
+    
     int numParticles = [_listOfParticles count];
     for (int i = 0; i<numParticles; i++) {
         for (int j = i+1; j<numParticles; j++) {
             Particle *p1 = [_listOfParticles objectAtIndex:i];
             Particle *p2 = [_listOfParticles objectAtIndex:j];
-            Vector2D *deltaR = [Vector2D sub:p2.displacement with:p1.displacement];
-            float length = [deltaR length];
-            float magnitude = - 10000.0 * ( p1.charge * p2.charge ) / (length*length*length);
-            Vector2D *force = [Vector2D mult:deltaR with:magnitude];
-            [p1.force add:force];
-            [p2.force add:[Vector2D mult:force with:-1.0f]];
+            Vector2D *r = [Vector2D sub:p2.displacement with:p1.displacement];
+            Vector2D *forceDirection = [r normalize];
+            int forceMagnitude = -(p1.charge*p2.charge)/[r lengthSquared];
+            Vector2D *electrostaticForce = [Vector2D mult:forceDirection with:forceMagnitude];
+            
+            [p1.electrostaticForce add:electrostaticForce];
+            [p2.electrostaticForce add:[Vector2D mult:electrostaticForce with:-1.0f]];
+        }
+    }
+}
+- (void)calculateRepulsiveForces
+{
+    //CGRect viewRect = [[UIScreen mainScreen]bounds];
+    //int height = viewRect.size.height;
+    //int width = viewRect.size.height;
+    
+    int numParticles = [_listOfParticles count];
+    for (int i = 0; i<numParticles; i++) {
+        for (int j = i+1; j<numParticles; j++) {
+            Particle *p1 = [_listOfParticles objectAtIndex:i];
+            Particle *p2 = [_listOfParticles objectAtIndex:j];
+            Vector2D *r = [Vector2D sub:p1.displacement with:p2.displacement];
+            Vector2D *forceDirection = [r normalize];
+
+            float rLength = [r length];
+            int forceMagnitude = 1.0f / powf(rLength,6.0f);
+            Vector2D *repulsiveForce = [Vector2D mult:forceDirection with:forceMagnitude];
+            
+            [p1.repulsiveForce add:repulsiveForce];
+            [p2.repulsiveForce add:[Vector2D mult:repulsiveForce with:-1.0f]];
         }
     }
 }
