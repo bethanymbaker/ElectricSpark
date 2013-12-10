@@ -117,19 +117,76 @@
     if (![p1 isEqual:p2]) {
         Vector2D *r = [Vector2D sub:[p2 displacement] with:[p1 displacement]];
         float rLength = [r length];
+        float mass = [p1 mass];
+        
         Vector2D *forceDirection = [r normalize];
         
-        for (int i = 0; i<_numberOfTaylorSeriesTerms; i++) {
-            float charge1 = [p1 charge];
-            float charge2 = [p2 charge];
-            float mass = [p1 mass];
+        if ([[p1 class]isSubclassOfClass:[Neutron class]]) {
+            if ([[p2 class]isSubclassOfClass:[Neutron class]]) {
+                
+            } else {
+                
+                //
+                for (int i = 0; i<_numberOfTaylorSeriesTerms; i++) {
+                    float charge1 = 1.0f;
+                    float charge2 = [p2 charge];
+                    float forceMagnitude = charge1 * charge2 / mass * \
+                    powf(-(_deltaT/rLength), (float)(i+1)) * \
+                    1.0f/[self factorial:(i+1)];
+                    
+                    force = [force add:[Vector2D mult:forceDirection with:forceMagnitude]];
+                    //
+                    charge1 = -1.0f;
+                    forceMagnitude = charge1 * charge2 / mass * \
+                    powf(-(_deltaT/rLength), (float)(i+1)) * \
+                    1.0f/[self factorial:(i+1)];
+                    
+                    force = [force add:[Vector2D mult:forceDirection with:forceMagnitude]];
+                }
+                //
+                
+            }
             
-            float forceMagnitude = charge1 * charge2 / mass * \
-            powf(-(_deltaT/rLength), (float)(i+1)) * \
-            1.0f/[self factorial:(i+1)];
+        } else {
             
-            force = [force add:[Vector2D mult:forceDirection with:forceMagnitude]];
+            if ([[p2 class]isSubclassOfClass:[Neutron class]]) {
+                
+                //
+                for (int i = 0; i<_numberOfTaylorSeriesTerms; i++) {
+                    float charge1 = [p1 charge];
+                    float charge2 = 1.0f;
+                    float forceMagnitude = charge1 * charge2 / mass * \
+                    powf(-(_deltaT/rLength), (float)(i+1)) * \
+                    1.0f/[self factorial:(i+1)];
+                    
+                    force = [force add:[Vector2D mult:forceDirection with:forceMagnitude]];
+                    //
+                    charge2 = -1.0f;
+                    forceMagnitude = charge1 * charge2 / mass * \
+                    powf(-(_deltaT/rLength), (float)(i+1)) * \
+                    1.0f/[self factorial:(i+1)];
+                    
+                    force = [force add:[Vector2D mult:forceDirection with:forceMagnitude]];
+                }
+                //
+                
+            } else {
+                
+                //
+                for (int i = 0; i<_numberOfTaylorSeriesTerms; i++) {
+                    float charge1 = [p1 charge];
+                    float charge2 = [p2 charge];
+                    
+                    float forceMagnitude = charge1 * charge2 / mass * \
+                    powf(-(_deltaT/rLength), (float)(i+1)) * \
+                    1.0f/[self factorial:(i+1)];
+                    
+                    force = [force add:[Vector2D mult:forceDirection with:forceMagnitude]];
+                }
+                //
+            }
         }
+        
     }
     return force;
 }

@@ -13,7 +13,7 @@
 {
     self = [super initWithLocationOfTouch:locationOfTouch];
     if (self) {
-        self.mass = 1000.0f;
+        self.mass = 1001.0f;
         self.charge = 0.0f;
         self.color = [UIColor whiteColor];
         self.electron = [[Electron alloc]initWithLocationOfTouch:locationOfTouch];
