@@ -28,6 +28,7 @@
 		69C3A9EF184D5403009A7DE4 /* Particle.m in Sources */ = {isa = PBXBuildFile; fileRef = 69C3A9EE184D5403009A7DE4 /* Particle.m */; };
 		69C3AA0C18513C37009A7DE4 /* Proton.m in Sources */ = {isa = PBXBuildFile; fileRef = 69C3AA0B18513C37009A7DE4 /* Proton.m */; };
 		69C3AA1218567375009A7DE4 /* Neutron.m in Sources */ = {isa = PBXBuildFile; fileRef = 69C3AA1118567375009A7DE4 /* Neutron.m */; };
+		69C3AA151857BFF5009A7DE4 /* Hydrogen.m in Sources */ = {isa = PBXBuildFile; fileRef = 69C3AA141857BFF5009A7DE4 /* Hydrogen.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -73,6 +74,8 @@
 		69C3AA0B18513C37009A7DE4 /* Proton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Proton.m; sourceTree = "<group>"; };
 		69C3AA1018567375009A7DE4 /* Neutron.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Neutron.h; sourceTree = "<group>"; };
 		69C3AA1118567375009A7DE4 /* Neutron.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Neutron.m; sourceTree = "<group>"; };
+		69C3AA131857BFF5009A7DE4 /* Hydrogen.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Hydrogen.h; sourceTree = "<group>"; };
+		69C3AA141857BFF5009A7DE4 /* Hydrogen.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Hydrogen.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -152,6 +155,8 @@
 				69C3AA0B18513C37009A7DE4 /* Proton.m */,
 				69C3AA1018567375009A7DE4 /* Neutron.h */,
 				69C3AA1118567375009A7DE4 /* Neutron.m */,
+				69C3AA131857BFF5009A7DE4 /* Hydrogen.h */,
+				69C3AA141857BFF5009A7DE4 /* Hydrogen.m */,
 			);
 			path = ElectricSpark;
 			sourceTree = "<group>";
@@ -296,6 +301,7 @@
 				690898491842C8EB0060DB83 /* Vector2D.m in Sources */,
 				699615DE18400E9D0090E199 /* ElectricSparkAppDelegate.m in Sources */,
 				69C3AA1218567375009A7DE4 /* Neutron.m in Sources */,
+				69C3AA151857BFF5009A7DE4 /* Hydrogen.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

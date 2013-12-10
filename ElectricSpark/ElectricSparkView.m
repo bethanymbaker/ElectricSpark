@@ -29,10 +29,10 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
-        _numberOfTaylorSeriesTerms = 10;
+        _numberOfTaylorSeriesTerms = 21;
         self.backgroundColor = [UIColor magentaColor];
         _listOfParticles = [[NSMutableArray alloc]init];
-        _deltaT = 0.5f;
+        _deltaT = 0.25f;
         _singleTapRecognizer = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(addElectron:)];
         _singleTapRecognizer.delaysTouchesEnded = YES;
         _singleTapRecognizer.numberOfTapsRequired = 1;
@@ -89,7 +89,7 @@
 }
 - (void)animate
 {
-    [NSTimer scheduledTimerWithTimeInterval:1.0/20.0*_deltaT target:self selector:@selector(animate) userInfo:NULL repeats:NO];
+    [NSTimer scheduledTimerWithTimeInterval:1.0/40.0*_deltaT target:self selector:@selector(animate) userInfo:NULL repeats:NO];
     [self calculateForces];
     [self calculateDisplacements];
     [self setNeedsDisplay];
