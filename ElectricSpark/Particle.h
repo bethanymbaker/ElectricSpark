@@ -14,9 +14,8 @@
 @property float mass;
 @property float charge;
 @property Vector2D *displacement;
-@property NSMutableArray *forceVector;
 @property UIColor *color;
-@property int lengthForceVector;
+@property Vector2D *force;
 - (id)initWithLocationOfTouch:(CGPoint)locationOfTouch;
 
 @end

@@ -20,6 +20,7 @@
 @property (nonatomic) UITapGestureRecognizer *singleTapRecognizer;
 @property (nonatomic) UITapGestureRecognizer *doubleTapRecognizer;
 @property (nonatomic) UILongPressGestureRecognizer *longPressRecognizer;
+@property int numberOfTaylorSeriesTerms;
 @end
 
 @implementation ElectricSparkView
@@ -28,6 +29,7 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
+        _numberOfTaylorSeriesTerms = 10;
         self.backgroundColor = [UIColor magentaColor];
         _listOfParticles = [[NSMutableArray alloc]init];
         _deltaT = 0.5f;
@@ -42,6 +44,7 @@
         
         _longPressRecognizer = [[UILongPressGestureRecognizer alloc]initWithTarget:self action:@selector(addNeutron:)];
         [_singleTapRecognizer requireGestureRecognizerToFail:_longPressRecognizer];
+        [_doubleTapRecognizer requireGestureRecognizerToFail:_longPressRecognizer];
         
         [self addGestureRecognizer:_singleTapRecognizer];
         [self addGestureRecognizer:_doubleTapRecognizer];
@@ -93,64 +96,42 @@
 }
 - (void)calculateDisplacements
 {
-    for (id particle in _listOfParticles) {
-        Vector2D *displacement = [particle displacement];
-        for (int i = 0; i<[particle lengthForceVector]; i++) {
-            if ([[particle class]isSubclassOfClass:[Neutron class]]) {
-                [displacement add:[[[particle proton]forceVector] objectAtIndex:i]];
-                [displacement add:[[[particle electron]forceVector] objectAtIndex:i]];
-            } else {
-                [displacement add:[[particle forceVector] objectAtIndex:i]];
-            }
-        }
-        [particle setDisplacement:displacement];
+    for (Particle *particle in _listOfParticles) {
+        [particle.displacement add:particle.force];
     }
 }
 - (void)calculateForces
 {
-    for (id p1 in _listOfParticles) {
-        for (id p2 in _listOfParticles) {
-            if ([p1 isEqual:p2]) {
-                
-            } else {
-                if ([[p1 class]isSubclassOfClass:[Neutron class]]) {
-                    if ([[p2 class]isSubclassOfClass:[Neutron class]]) {
-                        [self calculateForceOn:[p1 proton] dueTo:[p2 proton]];
-                        [self calculateForceOn:[p1 proton] dueTo:[p2 electron]];
-                        [self calculateForceOn:[p1 electron] dueTo:[p2 proton]];
-                        [self calculateForceOn:[p1 electron] dueTo:[p2 electron]];
-                    } else {
-                        [self calculateForceOn:[p1 proton] dueTo:p2];
-                        [self calculateForceOn:[p1 electron] dueTo:p2];
-                    }
-                } else {
-                    if ([[p2 class]isSubclassOfClass:[Neutron class]]) {
-                        [self calculateForceOn:p1 dueTo:[p2 proton]];
-                        [self calculateForceOn:p1 dueTo:[p2 electron]];
-                    } else {
-                        [self calculateForceOn:p1 dueTo:p2];
-                    }
-                }
-            }
+    for (Particle *p1 in _listOfParticles) {
+        Vector2D *force = [[Vector2D alloc]init];
+        for (Particle *p2 in _listOfParticles) {
+            force = [force add:[self calculateForceOn:p1 dueTo:p2]];
         }
+        p1.force = force;
     }
 }
-- (void)calculateForceOn:(Particle *)p1 dueTo:(Particle *)p2
+- (Vector2D *)calculateForceOn:(id)p1 dueTo:(id)p2
 {
-    Vector2D *r = [Vector2D sub:p2.displacement with:p1.displacement];
-    float rLength = [r length];
-    Vector2D *forceDirection = [r normalize];
-    int factorial = 1;
-    for (int i = 0; i<p1.lengthForceVector; i++) {
-        factorial*=(i+1);
+    Vector2D *force = [[Vector2D alloc]init];
+    
+    if (![p1 isEqual:p2]) {
+        Vector2D *r = [Vector2D sub:[p2 displacement] with:[p1 displacement]];
+        float rLength = [r length];
+        Vector2D *forceDirection = [r normalize];
         
-        float forceMagnitude = p1.charge*p2.charge / (p1.mass) * \
-        powf(-_deltaT/rLength, (float)(i+1)) * \
-        1.0f/factorial;
-        Vector2D *forceVector = [Vector2D mult:forceDirection with:forceMagnitude];
-        
-        [p1.forceVector replaceObjectAtIndex:i withObject:forceVector];
+        for (int i = 0; i<_numberOfTaylorSeriesTerms; i++) {
+            float charge1 = [p1 charge];
+            float charge2 = [p2 charge];
+            float mass = [p1 mass];
+            
+            float forceMagnitude = charge1 * charge2 / mass * \
+            powf(-(_deltaT/rLength), (float)(i+1)) * \
+            1.0f/[self factorial:(i+1)];
+            
+            force = [force add:[Vector2D mult:forceDirection with:forceMagnitude]];
+        }
     }
+    return force;
 }
 - (void)drawRect:(CGRect)rect
 {
@@ -165,5 +146,13 @@
         CGContextStrokeEllipseInRect(context, CGRectMake(particle.displacement.x, particle.displacement.y, 10.0, 10.0));
         CGContextFillEllipseInRect(context, CGRectMake(particle.displacement.x, particle.displacement.y, 10.0, 10.0));
     }
+}
+- (int)factorial:(int)n
+{
+    int factorial = 1;
+    for (int i = 1; i<n+1; i++) {
+        factorial*=i;
+    }
+    return factorial;
 }
 @end

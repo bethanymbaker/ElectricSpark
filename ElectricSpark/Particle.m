@@ -18,11 +18,7 @@
         _color = [UIColor yellowColor];
         _mass = 1.0f;
         _displacement = [[Vector2D alloc]initWithX:locationOfTouch.x Y:locationOfTouch.y];
-        _forceVector = [[NSMutableArray alloc]init];
-        _lengthForceVector = 10;
-        for (int i = 0; i<_lengthForceVector; i++) {
-            [_forceVector addObject:[[Vector2D alloc]init]];
-        }
+        _force = [[Vector2D alloc]init];
         return self;
     } else {
         return nil;
