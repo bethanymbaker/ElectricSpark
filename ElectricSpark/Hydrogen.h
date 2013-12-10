@@ -6,8 +6,8 @@
 //  Copyright (c) 2013 Bethany Simmons. All rights reserved.
 //
 
-#import "Particle.h"
+#import "Neutron.h"
 
-@interface Hydrogen : Particle
+@interface Hydrogen : Neutron
 
 @end

@@ -12,6 +12,7 @@
 #import "Vector2D.h"
 #import "Particle.h"
 #import "Neutron.h"
+#import "Hydrogen.h"
 
 @interface ElectricSparkView ()
 @property (nonatomic) CGPoint locationOfTouch;
@@ -102,12 +103,24 @@
 }
 - (void)calculateForces
 {
+    BOOL hydrogenBreak = NO;
+    
     for (Particle *p1 in _listOfParticles) {
         Vector2D *force = [[Vector2D alloc]init];
         for (Particle *p2 in _listOfParticles) {
             force = [force add:[self calculateForceOn:p1 dueTo:p2]];
+            
+            // If hydrogen atom has formed
+            if (!p1.color) {
+                hydrogenBreak = YES;
+                break;
+            }
         }
-        p1.force = force;
+        if (hydrogenBreak) {
+            break;
+        } else {
+           p1.force = force;
+        }
     }
 }
 - (Vector2D *)calculateForceOn:(id)p1 dueTo:(id)p2
@@ -117,6 +130,34 @@
     if (![p1 isEqual:p2]) {
         Vector2D *r = [Vector2D sub:[p2 displacement] with:[p1 displacement]];
         float rLength = [r length];
+        
+        if ([r isZero]) {
+            
+            // Make hydrogen atom
+            if ([[p1 class]isSubclassOfClass:[Proton class]]) {
+                if ([[p2 class]isSubclassOfClass:[Electron class]]) {
+                    CGPoint locationOfTouch = CGPointMake([p1 displacement].x, [p1 displacement].y);
+                    Hydrogen *hydrogen = [[Hydrogen alloc]initWithLocationOfTouch:locationOfTouch];
+                    [_listOfParticles removeObject:p1];
+                    [_listOfParticles removeObject:p2];
+                    [_listOfParticles addObject:hydrogen];
+                    return force;
+                }
+            } else if ([[p1 class]isSubclassOfClass:[Electron class]]) {
+                if ([[p2 class]isSubclassOfClass:[Proton class]]) {
+                    CGPoint locationOfTouch = CGPointMake([p2 displacement].x, [p2 displacement].y);
+                    Hydrogen *hydrogen = [[Hydrogen alloc]initWithLocationOfTouch:locationOfTouch];
+                    [_listOfParticles removeObject:p1];
+                    [_listOfParticles removeObject:p2];
+                    [_listOfParticles addObject:hydrogen];
+                    return force;
+                }
+                
+            }
+            //
+            
+        }
+        
         float mass = [p1 mass];
         
         Vector2D *forceDirection = [r normalize];
