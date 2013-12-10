@@ -93,71 +93,63 @@
 }
 - (void)calculateDisplacements
 {
-    for (Particle *particle in _listOfParticles) {
-        Vector2D *initialDisplacement = particle.displacement;
-        Vector2D *initialVelocity = particle.velocity;
-        Vector2D *initialAcceleration = [particle.force div:particle.mass];
-        Vector2D *finalDisplacement = [[initialDisplacement add:[initialVelocity mult:_deltaT]] add:[initialAcceleration mult:0.5f*_deltaT*_deltaT]];
-        Vector2D *finalVelocity = [initialVelocity add:[initialAcceleration mult:_deltaT]];
-        particle.displacement = finalDisplacement;
-        particle.velocity = finalVelocity;
+    for (id particle in _listOfParticles) {
+        Vector2D *displacement = [particle displacement];
+        for (int i = 0; i<[particle lengthForceVector]; i++) {
+            if ([[particle class]isSubclassOfClass:[Neutron class]]) {
+                [displacement add:[[[particle proton]forceVector] objectAtIndex:i]];
+                [displacement add:[[[particle electron]forceVector] objectAtIndex:i]];
+            } else {
+                [displacement add:[[particle forceVector] objectAtIndex:i]];
+            }
+        }
+        [particle setDisplacement:displacement];
     }
 }
 - (void)calculateForces
 {
-    float strongForce = 100.0f;
-    float electrostaticForceWeight = strongForce * 1.0f/137.0f;
-    float repulsiveForceWeight = strongForce * 0.000001f;
-    
-    [self calculateElectrostaticForces];
-    [self calculateRepulsiveForces];
-    for (Particle *particle in _listOfParticles) {
-        [particle.force add:[particle.electrostaticForce mult:electrostaticForceWeight]];
-        [particle.force add:[particle.repulsiveForce mult:repulsiveForceWeight]];
-    }
-}
-- (void)calculateElectrostaticForces
-{
-    //CGRect viewRect = [[UIScreen mainScreen]bounds];
-    //int height = viewRect.size.height;
-    //int width = viewRect.size.height;
-    
-    int numParticles = [_listOfParticles count];
-    for (int i = 0; i<numParticles; i++) {
-        for (int j = i+1; j<numParticles; j++) {
-            Particle *p1 = [_listOfParticles objectAtIndex:i];
-            Particle *p2 = [_listOfParticles objectAtIndex:j];
-            Vector2D *r = [Vector2D sub:p2.displacement with:p1.displacement];
-            Vector2D *forceDirection = [r normalize];
-            int forceMagnitude = -(p1.charge*p2.charge)/[r lengthSquared];
-            Vector2D *electrostaticForce = [Vector2D mult:forceDirection with:forceMagnitude];
-            
-            [p1.electrostaticForce add:electrostaticForce];
-            [p2.electrostaticForce add:[Vector2D mult:electrostaticForce with:-1.0f]];
+    for (id p1 in _listOfParticles) {
+        for (id p2 in _listOfParticles) {
+            if ([p1 isEqual:p2]) {
+                
+            } else {
+                if ([[p1 class]isSubclassOfClass:[Neutron class]]) {
+                    if ([[p2 class]isSubclassOfClass:[Neutron class]]) {
+                        [self calculateForceOn:[p1 proton] dueTo:[p2 proton]];
+                        [self calculateForceOn:[p1 proton] dueTo:[p2 electron]];
+                        [self calculateForceOn:[p1 electron] dueTo:[p2 proton]];
+                        [self calculateForceOn:[p1 electron] dueTo:[p2 electron]];
+                    } else {
+                        [self calculateForceOn:[p1 proton] dueTo:p2];
+                        [self calculateForceOn:[p1 electron] dueTo:p2];
+                    }
+                } else {
+                    if ([[p2 class]isSubclassOfClass:[Neutron class]]) {
+                        [self calculateForceOn:p1 dueTo:[p2 proton]];
+                        [self calculateForceOn:p1 dueTo:[p2 electron]];
+                    } else {
+                        [self calculateForceOn:p1 dueTo:p2];
+                    }
+                }
+            }
         }
     }
 }
-- (void)calculateRepulsiveForces
+- (void)calculateForceOn:(Particle *)p1 dueTo:(Particle *)p2
 {
-    //CGRect viewRect = [[UIScreen mainScreen]bounds];
-    //int height = viewRect.size.height;
-    //int width = viewRect.size.height;
-    
-    int numParticles = [_listOfParticles count];
-    for (int i = 0; i<numParticles; i++) {
-        for (int j = i+1; j<numParticles; j++) {
-            Particle *p1 = [_listOfParticles objectAtIndex:i];
-            Particle *p2 = [_listOfParticles objectAtIndex:j];
-            Vector2D *r = [Vector2D sub:p1.displacement with:p2.displacement];
-            Vector2D *forceDirection = [r normalize];
-
-            float rLength = [r length];
-            int forceMagnitude = 1.0f / powf(rLength,6.0f);
-            Vector2D *repulsiveForce = [Vector2D mult:forceDirection with:forceMagnitude];
-            
-            [p1.repulsiveForce add:repulsiveForce];
-            [p2.repulsiveForce add:[Vector2D mult:repulsiveForce with:-1.0f]];
-        }
+    Vector2D *r = [Vector2D sub:p2.displacement with:p1.displacement];
+    float rLength = [r length];
+    Vector2D *forceDirection = [r normalize];
+    int factorial = 1;
+    for (int i = 0; i<p1.lengthForceVector; i++) {
+        factorial*=(i+1);
+        
+        float forceMagnitude = p1.charge*p2.charge / (p1.mass) * \
+        powf(-_deltaT/rLength, (float)(i+1)) * \
+        1.0f/factorial;
+        Vector2D *forceVector = [Vector2D mult:forceDirection with:forceMagnitude];
+        
+        [p1.forceVector replaceObjectAtIndex:i withObject:forceVector];
     }
 }
 - (void)drawRect:(CGRect)rect

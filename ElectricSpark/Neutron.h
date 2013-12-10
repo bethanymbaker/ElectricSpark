@@ -7,8 +7,12 @@
 //
 
 #import "Particle.h"
+#import "Electron.h"
+#import "Proton.h"
 
 @interface Neutron : Particle
 @property float charge;
 @property UIColor *color;
+@property Proton *proton;
+@property Electron *electron;
 @end

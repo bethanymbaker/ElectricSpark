@@ -14,11 +14,9 @@
 @property float mass;
 @property float charge;
 @property Vector2D *displacement;
-@property Vector2D *force;
-@property Vector2D *velocity;
-@property Vector2D *electrostaticForce;
-@property Vector2D *repulsiveForce;
+@property NSMutableArray *forceVector;
 @property UIColor *color;
+@property int lengthForceVector;
 - (id)initWithLocationOfTouch:(CGPoint)locationOfTouch;
 
 @end

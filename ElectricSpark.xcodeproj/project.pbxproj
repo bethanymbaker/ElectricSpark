@@ -27,7 +27,6 @@
 		69C3A9EC184D4ED8009A7DE4 /* ElectricSparkSimulation.png in Resources */ = {isa = PBXBuildFile; fileRef = 69C3A9EB184D4ED8009A7DE4 /* ElectricSparkSimulation.png */; };
 		69C3A9EF184D5403009A7DE4 /* Particle.m in Sources */ = {isa = PBXBuildFile; fileRef = 69C3A9EE184D5403009A7DE4 /* Particle.m */; };
 		69C3AA0C18513C37009A7DE4 /* Proton.m in Sources */ = {isa = PBXBuildFile; fileRef = 69C3AA0B18513C37009A7DE4 /* Proton.m */; };
-		69C3AA0F18566F68009A7DE4 /* Photon.m in Sources */ = {isa = PBXBuildFile; fileRef = 69C3AA0E18566F68009A7DE4 /* Photon.m */; };
 		69C3AA1218567375009A7DE4 /* Neutron.m in Sources */ = {isa = PBXBuildFile; fileRef = 69C3AA1118567375009A7DE4 /* Neutron.m */; };
 /* End PBXBuildFile section */
 
@@ -72,8 +71,6 @@
 		69C3A9EE184D5403009A7DE4 /* Particle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Particle.m; sourceTree = "<group>"; };
 		69C3AA0A18513C37009A7DE4 /* Proton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Proton.h; sourceTree = "<group>"; };
 		69C3AA0B18513C37009A7DE4 /* Proton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Proton.m; sourceTree = "<group>"; };
-		69C3AA0D18566F68009A7DE4 /* Photon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Photon.h; sourceTree = "<group>"; };
-		69C3AA0E18566F68009A7DE4 /* Photon.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Photon.m; sourceTree = "<group>"; };
 		69C3AA1018567375009A7DE4 /* Neutron.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Neutron.h; sourceTree = "<group>"; };
 		69C3AA1118567375009A7DE4 /* Neutron.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Neutron.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -153,8 +150,6 @@
 				69C3A9EE184D5403009A7DE4 /* Particle.m */,
 				69C3AA0A18513C37009A7DE4 /* Proton.h */,
 				69C3AA0B18513C37009A7DE4 /* Proton.m */,
-				69C3AA0D18566F68009A7DE4 /* Photon.h */,
-				69C3AA0E18566F68009A7DE4 /* Photon.m */,
 				69C3AA1018567375009A7DE4 /* Neutron.h */,
 				69C3AA1118567375009A7DE4 /* Neutron.m */,
 			);
@@ -298,7 +293,6 @@
 				699615DA18400E9D0090E199 /* main.m in Sources */,
 				69089843184265F00060DB83 /* ElectricSparkView.m in Sources */,
 				69C3AA0C18513C37009A7DE4 /* Proton.m in Sources */,
-				69C3AA0F18566F68009A7DE4 /* Photon.m in Sources */,
 				690898491842C8EB0060DB83 /* Vector2D.m in Sources */,
 				699615DE18400E9D0090E199 /* ElectricSparkAppDelegate.m in Sources */,
 				69C3AA1218567375009A7DE4 /* Neutron.m in Sources */,
