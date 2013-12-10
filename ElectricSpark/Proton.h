@@ -9,6 +9,4 @@
 #import "Particle.h"
 
 @interface Proton : Particle
-@property float charge;
-@property UIColor *color;
 @end
