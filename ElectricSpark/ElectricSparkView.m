@@ -30,7 +30,7 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
-        _numberOfTaylorSeriesTerms = 21;
+        _numberOfTaylorSeriesTerms = 5;
         self.backgroundColor = [UIColor magentaColor];
         _listOfParticles = [[NSMutableArray alloc]init];
         _deltaT = 0.25f;
