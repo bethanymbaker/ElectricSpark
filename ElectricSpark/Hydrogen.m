@@ -9,5 +9,15 @@
 #import "Hydrogen.h"
 
 @implementation Hydrogen
-
+- (id)initWithLocationOfTouch:(CGPoint)locationOfTouch
+{
+    self = [super initWithLocationOfTouch:locationOfTouch];
+    if (self) {
+        self.mass = 1001.0f;
+        self.color = [UIColor blueColor];
+        self.electron = [[Electron alloc]initWithLocationOfTouch:locationOfTouch];
+        self.proton = [[Proton alloc]initWithLocationOfTouch:locationOfTouch];
+    }
+    return self;
+}
 @end
