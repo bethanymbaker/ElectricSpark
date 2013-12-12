@@ -173,14 +173,14 @@
                     float charge2 = [p2 charge];
                     float forceMagnitude = charge1 * charge2 / mass * \
                     powf(-(_deltaT/rLength), (float)(i+1)) * \
-                    1.0f/[self factorial:(i+1)];
+                    1.0f/(i+1);
                     
                     force = [force add:[Vector2D mult:forceDirection with:forceMagnitude]];
                     //
                     charge1 = -1.0f;
                     forceMagnitude = charge1 * charge2 / mass * \
                     powf(-(_deltaT/rLength), (float)(i+1)) * \
-                    1.0f/[self factorial:(i+1)];
+                    1.0f/(i+1);
                     
                     force = [force add:[Vector2D mult:forceDirection with:forceMagnitude]];
                 }
@@ -198,14 +198,14 @@
                     float charge2 = 1.0f;
                     float forceMagnitude = charge1 * charge2 / mass * \
                     powf(-(_deltaT/rLength), (float)(i+1)) * \
-                    1.0f/[self factorial:(i+1)];
+                    1.0f/(i+1);
                     
                     force = [force add:[Vector2D mult:forceDirection with:forceMagnitude]];
                     //
                     charge2 = -1.0f;
                     forceMagnitude = charge1 * charge2 / mass * \
                     powf(-(_deltaT/rLength), (float)(i+1)) * \
-                    1.0f/[self factorial:(i+1)];
+                    1.0f/(i+1);
                     
                     force = [force add:[Vector2D mult:forceDirection with:forceMagnitude]];
                 }
@@ -220,7 +220,7 @@
                     
                     float forceMagnitude = charge1 * charge2 / mass * \
                     powf(-(_deltaT/rLength), (float)(i+1)) * \
-                    1.0f/[self factorial:(i+1)];
+                    1.0f/(i+1);
                     
                     force = [force add:[Vector2D mult:forceDirection with:forceMagnitude]];
                 }
