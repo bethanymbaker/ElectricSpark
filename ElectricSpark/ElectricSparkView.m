@@ -23,7 +23,7 @@
 @property (nonatomic) UILongPressGestureRecognizer *longPressRecognizer;
 @property int numberOfTaylorSeriesTerms;
 @property float particleSize;
-@property BOOL hydrogenBondsMayForm;
+@property BOOL hydrogenAtomsMayForm;
 @end
 
 @implementation ElectricSparkView
@@ -32,8 +32,8 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
-        _hydrogenBondsMayForm = NO;
-        _numberOfTaylorSeriesTerms = 5;
+        _hydrogenAtomsMayForm = YES;
+        _numberOfTaylorSeriesTerms = 10;
         self.backgroundColor = [UIColor whiteColor];
         _listOfParticles = [[NSMutableArray alloc]init];
         _deltaT = 0.25f;
@@ -114,13 +114,11 @@
         for (Particle *p2 in _listOfParticles) {
             force = [force add:[self calculateForceOn:p1 dueTo:p2]];
             
-            if (_hydrogenBondsMayForm) {
                 // If hydrogen atom has formed
                 if (!p1.color) {
                     hydrogenBreak = YES;
                     break;
                 }
-            }
 
         }
         if (hydrogenBreak) {
