@@ -22,6 +22,8 @@
 @property (nonatomic) UITapGestureRecognizer *doubleTapRecognizer;
 @property (nonatomic) UILongPressGestureRecognizer *longPressRecognizer;
 @property int numberOfTaylorSeriesTerms;
+@property float particleSize;
+@property BOOL hydrogenBondsMayForm;
 @end
 
 @implementation ElectricSparkView
@@ -30,10 +32,12 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
+        _hydrogenBondsMayForm = NO;
         _numberOfTaylorSeriesTerms = 5;
-        self.backgroundColor = [UIColor magentaColor];
+        self.backgroundColor = [UIColor whiteColor];
         _listOfParticles = [[NSMutableArray alloc]init];
         _deltaT = 0.25f;
+        _particleSize = 15.0f;
         _singleTapRecognizer = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(addElectron:)];
         _singleTapRecognizer.delaysTouchesEnded = YES;
         _singleTapRecognizer.numberOfTapsRequired = 1;
@@ -110,11 +114,14 @@
         for (Particle *p2 in _listOfParticles) {
             force = [force add:[self calculateForceOn:p1 dueTo:p2]];
             
-            // If hydrogen atom has formed
-            if (!p1.color) {
-                hydrogenBreak = YES;
-                break;
+            if (_hydrogenBondsMayForm) {
+                // If hydrogen atom has formed
+                if (!p1.color) {
+                    hydrogenBreak = YES;
+                    break;
+                }
             }
+
         }
         if (hydrogenBreak) {
             break;
@@ -239,10 +246,11 @@
 {
     CGContextRef context = UIGraphicsGetCurrentContext();
     for (Particle *particle in _listOfParticles) {
+        CGContextSetAlpha(context, 0.75f);
         CGContextSetFillColorWithColor(context, particle.color.CGColor);
         CGContextSetStrokeColorWithColor(context, particle.color.CGColor);
-        CGContextStrokeEllipseInRect(context, CGRectMake(particle.displacement.x, particle.displacement.y, 10.0, 10.0));
-        CGContextFillEllipseInRect(context, CGRectMake(particle.displacement.x, particle.displacement.y, 10.0, 10.0));
+        CGContextStrokeEllipseInRect(context, CGRectMake(particle.displacement.x, particle.displacement.y, _particleSize, _particleSize));
+        CGContextFillEllipseInRect(context, CGRectMake(particle.displacement.x, particle.displacement.y, _particleSize, _particleSize));
     }
 }
 - (int)factorial:(int)n

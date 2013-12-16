@@ -15,7 +15,7 @@
     if (self) {
         self.mass = 1.0f;
         self.charge = -1.0f;
-        self.color = [UIColor yellowColor];
+        self.color = [UIColor blueColor];
     }
     return self;
 }
