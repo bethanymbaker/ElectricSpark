@@ -18,6 +18,7 @@
 @property (nonatomic) CGPoint locationOfTouch;
 @property (strong, nonatomic) NSMutableArray *listOfParticles;
 @property (nonatomic) float deltaT;
+@property (nonatomic) float timeSpeedUpFactor;
 @property (nonatomic) UITapGestureRecognizer *singleTapRecognizer;
 @property (nonatomic) UITapGestureRecognizer *doubleTapRecognizer;
 @property (nonatomic) UILongPressGestureRecognizer *longPressRecognizer;
@@ -25,6 +26,7 @@
 @property float particleSize;
 @property BOOL hydrogenAtomsMayForm;
 @property float timeInterval;
+@property BOOL simulateAntimatter;
 @end
 
 @implementation ElectricSparkView
@@ -33,23 +35,25 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
-        _deltaT = 0.25f;
-        _timeInterval = 1.0f/40.0f * _deltaT;
+        _simulateAntimatter = YES;
+        _timeSpeedUpFactor = 20.0f;
+        _deltaT = 0.1f;
+        _timeInterval = _deltaT/_timeSpeedUpFactor;
         _hydrogenAtomsMayForm = YES;
         _numberOfTaylorSeriesTerms = 10;
         self.backgroundColor = [UIColor whiteColor];
         _listOfParticles = [[NSMutableArray alloc]init];
         _particleSize = 15.0f;
-        _singleTapRecognizer = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(addElectron:)];
+        _singleTapRecognizer = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(addParticle:)];
         _singleTapRecognizer.delaysTouchesEnded = YES;
         _singleTapRecognizer.numberOfTapsRequired = 1;
         
-        _doubleTapRecognizer = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(addProton:)];
+        _doubleTapRecognizer = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(addParticle:)];
         _doubleTapRecognizer.numberOfTapsRequired = 2;
         
         [_singleTapRecognizer requireGestureRecognizerToFail:_doubleTapRecognizer];
         
-        _longPressRecognizer = [[UILongPressGestureRecognizer alloc]initWithTarget:self action:@selector(addNeutron:)];
+        _longPressRecognizer = [[UILongPressGestureRecognizer alloc]initWithTarget:self action:@selector(addParticle:)];
         [_singleTapRecognizer requireGestureRecognizerToFail:_longPressRecognizer];
         [_doubleTapRecognizer requireGestureRecognizerToFail:_longPressRecognizer];
         
@@ -61,36 +65,26 @@
     }
     return self;
 }
-- (void)addNeutron:(UILongPressGestureRecognizer *)recognizer
+- (void)addParticle:(UIGestureRecognizer *)recognizer
 {
     CGPoint location = [recognizer locationInView:[recognizer.view self]];
-    Neutron *neutron = [[Neutron alloc]initWithLocationOfTouch:location];
-    if (neutron) {
-        [_listOfParticles addObject:neutron];
-        [self setNeedsDisplay];
-    }
-}
-- (void)addElectron:(UITapGestureRecognizer *)recognizer
-{
-    if (recognizer.state == UIGestureRecognizerStateEnded) {
-        CGPoint location = [recognizer locationInView:[recognizer.view self]];
-        Electron *electron = [[Electron alloc]initWithLocationOfTouch:location];
-        if (electron) {
-            [_listOfParticles addObject:electron];
-            [self setNeedsDisplay];
+    Particle *particle;
+    
+    if ([recognizer isEqual:_singleTapRecognizer]) {
+        if (recognizer.state == UIGestureRecognizerStateEnded) {
+            particle = [[Electron alloc]initWithLocationOfTouch:location];
         }
+    } else if ([recognizer isEqual:_doubleTapRecognizer]) {
+        if (recognizer.state == UIGestureRecognizerStateEnded) {
+            particle = [[Proton alloc]initWithLocationOfTouch:location];
+        }
+    } else if ([recognizer isEqual:_longPressRecognizer]) {
+        particle = [[Neutron alloc]initWithLocationOfTouch:location];
     }
     
-}
-- (void)addProton:(UITapGestureRecognizer *)recognizer
-{
-    if (recognizer.state == UIGestureRecognizerStateEnded) {
-        CGPoint location = [recognizer locationInView:[recognizer.view self]];
-        Proton *proton = [[Proton alloc]initWithLocationOfTouch:location];
-        if (proton) {
-            [_listOfParticles addObject:proton];
-            [self setNeedsDisplay];
-        }
+    if (particle) {
+        [_listOfParticles addObject:particle];
+        [self setNeedsDisplay];
     }
     
 }
@@ -160,16 +154,12 @@
                 }
                 
             }
-            //
-            
         }
-        
         float mass = [p1 mass];
         Vector2D *forceDirection = [r normalize];
         
         if (![[p1 class]isSubclassOfClass:[Neutron class]] && \
             ![[p2 class]isSubclassOfClass:[Neutron class]]) {
-            //
             for (int i = 0; i<_numberOfTaylorSeriesTerms; i++) {
                 float charge1 = [p1 charge];
                 float charge2 = [p2 charge];
@@ -180,9 +170,7 @@
                 
                 force = [force add:[Vector2D mult:forceDirection with:forceMagnitude]];
             }
-            //
         }
-        
     }
     return force;
 }
@@ -196,17 +184,7 @@
     for (Particle *particle in _listOfParticles) {
         CGContextSetAlpha(context, particle.alpha);
         CGContextSetFillColorWithColor(context, particle.color.CGColor);
-        //CGContextSetStrokeColorWithColor(context, particle.color.CGColor);
-        //CGContextStrokeEllipseInRect(context, CGRectMake(particle.displacement.x, particle.displacement.y, _particleSize, _particleSize));
         CGContextFillEllipseInRect(context, CGRectMake(particle.displacement.x, particle.displacement.y, _particleSize, _particleSize));
     }
-}
-- (int)factorial:(int)n
-{
-    int factorial = 1;
-    for (int i = 1; i<n+1; i++) {
-        factorial*=i;
-    }
-    return factorial;
 }
 @end
