@@ -24,6 +24,7 @@
 @property int numberOfTaylorSeriesTerms;
 @property float particleSize;
 @property BOOL hydrogenAtomsMayForm;
+@property float timeInterval;
 @end
 
 @implementation ElectricSparkView
@@ -32,11 +33,12 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
+        _deltaT = 0.25f;
+        _timeInterval = 1.0f/40.0f * _deltaT;
         _hydrogenAtomsMayForm = YES;
         _numberOfTaylorSeriesTerms = 10;
         self.backgroundColor = [UIColor whiteColor];
         _listOfParticles = [[NSMutableArray alloc]init];
-        _deltaT = 0.25f;
         _particleSize = 15.0f;
         _singleTapRecognizer = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(addElectron:)];
         _singleTapRecognizer.delaysTouchesEnded = YES;
@@ -94,7 +96,7 @@
 }
 - (void)animate
 {
-    [NSTimer scheduledTimerWithTimeInterval:1.0/40.0*_deltaT target:self selector:@selector(animate) userInfo:NULL repeats:NO];
+    [NSTimer scheduledTimerWithTimeInterval:_timeInterval target:self selector:@selector(animate) userInfo:NULL repeats:NO];
     [self calculateForces];
     [self calculateDisplacements];
     [self setNeedsDisplay];
@@ -114,12 +116,11 @@
         for (Particle *p2 in _listOfParticles) {
             force = [force add:[self calculateForceOn:p1 dueTo:p2]];
             
-                // If hydrogen atom has formed
-                if (!p1.color) {
+                // If p2 annihilation
+                if (!p2.color) {
                     hydrogenBreak = YES;
                     break;
                 }
-
         }
         if (hydrogenBreak) {
             break;
@@ -164,73 +165,22 @@
         }
         
         float mass = [p1 mass];
-        
         Vector2D *forceDirection = [r normalize];
         
-        if ([[p1 class]isSubclassOfClass:[Neutron class]]) {
-            if ([[p2 class]isSubclassOfClass:[Neutron class]]) {
+        if (![[p1 class]isSubclassOfClass:[Neutron class]] && \
+            ![[p2 class]isSubclassOfClass:[Neutron class]]) {
+            //
+            for (int i = 0; i<_numberOfTaylorSeriesTerms; i++) {
+                float charge1 = [p1 charge];
+                float charge2 = [p2 charge];
                 
-            } else {
+                float forceMagnitude = charge1 * charge2 / mass * \
+                powf(-(_deltaT/rLength), (float)(i+1)) * \
+                1.0f/(i+1);
                 
-                //
-                for (int i = 0; i<_numberOfTaylorSeriesTerms; i++) {
-                    float charge1 = 1.0f;
-                    float charge2 = [p2 charge];
-                    float forceMagnitude = charge1 * charge2 / mass * \
-                    powf(-(_deltaT/rLength), (float)(i+1)) * \
-                    1.0f/(i+1);
-                    
-                    force = [force add:[Vector2D mult:forceDirection with:forceMagnitude]];
-                    //
-                    charge1 = -1.0f;
-                    forceMagnitude = charge1 * charge2 / mass * \
-                    powf(-(_deltaT/rLength), (float)(i+1)) * \
-                    1.0f/(i+1);
-                    
-                    force = [force add:[Vector2D mult:forceDirection with:forceMagnitude]];
-                }
-                //
-                
+                force = [force add:[Vector2D mult:forceDirection with:forceMagnitude]];
             }
-            
-        } else {
-            
-            if ([[p2 class]isSubclassOfClass:[Neutron class]]) {
-                
-                //
-                for (int i = 0; i<_numberOfTaylorSeriesTerms; i++) {
-                    float charge1 = [p1 charge];
-                    float charge2 = 1.0f;
-                    float forceMagnitude = charge1 * charge2 / mass * \
-                    powf(-(_deltaT/rLength), (float)(i+1)) * \
-                    1.0f/(i+1);
-                    
-                    force = [force add:[Vector2D mult:forceDirection with:forceMagnitude]];
-                    //
-                    charge2 = -1.0f;
-                    forceMagnitude = charge1 * charge2 / mass * \
-                    powf(-(_deltaT/rLength), (float)(i+1)) * \
-                    1.0f/(i+1);
-                    
-                    force = [force add:[Vector2D mult:forceDirection with:forceMagnitude]];
-                }
-                //
-                
-            } else {
-                
-                //
-                for (int i = 0; i<_numberOfTaylorSeriesTerms; i++) {
-                    float charge1 = [p1 charge];
-                    float charge2 = [p2 charge];
-                    
-                    float forceMagnitude = charge1 * charge2 / mass * \
-                    powf(-(_deltaT/rLength), (float)(i+1)) * \
-                    1.0f/(i+1);
-                    
-                    force = [force add:[Vector2D mult:forceDirection with:forceMagnitude]];
-                }
-                //
-            }
+            //
         }
         
     }
