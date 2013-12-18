@@ -116,8 +116,8 @@
         for (Particle *p2 in _listOfParticles) {
             force = [force add:[self calculateForceOn:p1 dueTo:p2]];
             
-                // If p2 annihilation
-                if (!p2.color) {
+                // If p1 annihilation
+                if (!p1.color) {
                     hydrogenBreak = YES;
                     break;
                 }
