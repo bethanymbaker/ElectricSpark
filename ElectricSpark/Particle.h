@@ -16,6 +16,7 @@
 @property Vector2D *displacement;
 @property UIColor *color;
 @property Vector2D *force;
+@property float alpha;
 - (id)initWithLocationOfTouch:(CGPoint)locationOfTouch;
 
 @end

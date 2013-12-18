@@ -14,6 +14,7 @@
 {
     self = [super init];
     if (self) {
+        _alpha = 0.5f;
         _charge = 0.0f;
         _color = [UIColor clearColor];
         _mass = 0.0f;
