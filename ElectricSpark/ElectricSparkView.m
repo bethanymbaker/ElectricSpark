@@ -78,7 +78,9 @@
             particle = [[Proton alloc]initWithLocationOfTouch:location];
         }
     } else if ([recognizer isEqual:_longPressRecognizer]) {
-        particle = [[Neutron alloc]initWithLocationOfTouch:location];
+        if (recognizer.state == UIGestureRecognizerStateEnded) {
+            particle = [[Neutron alloc]initWithLocationOfTouch:location];
+        }
     }
     
     if (particle) {
@@ -141,7 +143,8 @@
                     float rLength = [r length];
                     Vector2D *forceDirection = [r normalize];
                     float forceMagnitude = [p1 charge] * [p2 charge] * \
-                    powf(-(_deltaT/([p1 radius]*rLength)), (float)(i+1)) * \
+                    1.0f/powf([p1 radius], (float)(i+2)) * \
+                    powf(-(_deltaT/rLength), (float)(i+1)) * \
                     1.0f/(i+1);
                     
                     force = [force add:[Vector2D mult:forceDirection with:forceMagnitude]];
