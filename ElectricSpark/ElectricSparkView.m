@@ -12,7 +12,6 @@
 #import "Vector2D.h"
 #import "Particle.h"
 #import "Neutron.h"
-#import "Hydrogen.h"
 
 @interface ElectricSparkView ()
 @property (nonatomic) CGPoint locationOfTouch;
