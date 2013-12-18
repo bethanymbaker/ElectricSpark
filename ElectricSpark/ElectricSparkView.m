@@ -69,16 +69,14 @@
     CGPoint location = [recognizer locationInView:[recognizer.view self]];
     Particle *particle;
     
-    if ([recognizer isEqual:_singleTapRecognizer]) {
-        if (recognizer.state == UIGestureRecognizerStateEnded) {
+    if (recognizer.state == UIGestureRecognizerStateEnded) {
+        if ([recognizer isEqual:_singleTapRecognizer]) {
             particle = [[Electron alloc]initWithLocationOfTouch:location];
-        }
-    } else if ([recognizer isEqual:_doubleTapRecognizer]) {
-        if (recognizer.state == UIGestureRecognizerStateEnded) {
+        } else if ([recognizer isEqual:_doubleTapRecognizer]) {
             particle = [[Proton alloc]initWithLocationOfTouch:location];
+        } else if ([recognizer isEqual:_longPressRecognizer]) {
+            particle = [[Neutron alloc]initWithLocationOfTouch:location];
         }
-    } else if ([recognizer isEqual:_longPressRecognizer]) {
-        particle = [[Neutron alloc]initWithLocationOfTouch:location];
     }
     
     if (particle) {
@@ -137,12 +135,12 @@
             }
         } else {
             if ([p1 charge] && [p2 charge]) {
-                for (int i = 0; i<_numberOfTaylorSeriesTerms; i++) {
+                for (int n = 1; n<_numberOfTaylorSeriesTerms; n++) {
                     float rLength = [r length];
                     Vector2D *forceDirection = [r normalize];
-                    float forceMagnitude = [p1 charge] * [p2 charge] * \
-                    powf(-(_deltaT/([p1 radius]*rLength)), (float)(i+1)) * \
-                    1.0f/(i+1);
+                    float forceMagnitude = ([p1 charge]*[p2 charge]/n) * \
+                    powf((-1.0/[p1 radius]), (float)(n+1)) * \
+                    powf(_deltaT/rLength, (float)(n));
                     
                     force = [force add:[Vector2D mult:forceDirection with:forceMagnitude]];
                 }
