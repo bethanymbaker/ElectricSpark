@@ -33,8 +33,9 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
-        _deltaT = 0.25f;
-        _timeInterval = 1.0f/40.0f * _deltaT;
+        float timeSpeedUpFactor = 20.0f;
+        _deltaT = 0.1f;
+        _timeInterval = _deltaT/timeSpeedUpFactor;
         _hydrogenAtomsMayForm = YES;
         _numberOfTaylorSeriesTerms = 10;
         self.backgroundColor = [UIColor whiteColor];
