@@ -18,7 +18,7 @@
 @property (nonatomic) CGPoint locationOfTouch;
 @property (strong, nonatomic) NSMutableArray *listOfParticles;
 @property (nonatomic) float deltaT;
-@property (nonatomic) float timeSpeedUpFactor;
+@property (nonatomic) int timeSpeedUpFactor;
 @property (nonatomic) UITapGestureRecognizer *singleTapRecognizer;
 @property (nonatomic) UITapGestureRecognizer *doubleTapRecognizer;
 @property (nonatomic) UILongPressGestureRecognizer *longPressRecognizer;
@@ -35,9 +35,9 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
-        _simulateAntimatter = YES;
-        _timeSpeedUpFactor = 20.0f;
-        _deltaT = 0.1f;
+        _simulateAntimatter = NO;
+        _timeSpeedUpFactor = 10;
+        _deltaT = 0.25f;
         _timeInterval = _deltaT/_timeSpeedUpFactor;
         _hydrogenAtomsMayForm = YES;
         _numberOfTaylorSeriesTerms = 10;
