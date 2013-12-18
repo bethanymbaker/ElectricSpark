@@ -14,10 +14,10 @@
 {
     self = [super init];
     if (self) {
+        _radius = 0;
         _alpha = (float)drand48();
         _charge = 0.0f;
         _color = [UIColor clearColor];
-        _mass = 0.0f;
         _displacement = [[Vector2D alloc]initWithX:locationOfTouch.x Y:locationOfTouch.y];
         _force = [[Vector2D alloc]init];
         return self;

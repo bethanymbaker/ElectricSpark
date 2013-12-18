@@ -13,7 +13,7 @@
 {
     self = [super initWithLocationOfTouch:locationOfTouch];
     if (self) {
-        self.mass = 2002.0f;
+        self.radius = 22;
         self.color = [UIColor greenColor];
         self.hydrogen = [[Hydrogen alloc]initWithLocationOfTouch:locationOfTouch];
         self.neutron = [[Neutron alloc]initWithLocationOfTouch:locationOfTouch];

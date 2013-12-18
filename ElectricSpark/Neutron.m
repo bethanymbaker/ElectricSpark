@@ -13,8 +13,9 @@
 {
     self = [super initWithLocationOfTouch:locationOfTouch];
     if (self) {
-        self.mass = 1001.0f;
+        self.radius = 11;
         self.color = [UIColor yellowColor];
+        self.charge = 0.0f;
         self.electron = [[Electron alloc]initWithLocationOfTouch:locationOfTouch];
         self.proton = [[Proton alloc]initWithLocationOfTouch:locationOfTouch];
     }

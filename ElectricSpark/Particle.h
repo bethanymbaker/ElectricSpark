@@ -11,8 +11,8 @@
 
 @interface Particle : NSObject
 
-@property float mass;
 @property float charge;
+@property int radius;
 @property Vector2D *displacement;
 @property UIColor *color;
 @property Vector2D *force;

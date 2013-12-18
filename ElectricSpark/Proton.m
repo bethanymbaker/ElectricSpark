@@ -13,7 +13,7 @@
 {
     self = [super initWithLocationOfTouch:locationOfTouch];
     if (self) {
-        self.mass = 1000.0f;
+        self.radius = 10;
         self.charge = 1.0f;
         self.color = [UIColor redColor];
     }

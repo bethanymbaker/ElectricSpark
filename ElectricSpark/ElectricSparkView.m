@@ -155,7 +155,6 @@
                 
             }
         }
-        float mass = [p1 mass];
         Vector2D *forceDirection = [r normalize];
         
         if (![[p1 class]isSubclassOfClass:[Neutron class]] && \
@@ -163,9 +162,10 @@
             for (int i = 0; i<_numberOfTaylorSeriesTerms; i++) {
                 float charge1 = [p1 charge];
                 float charge2 = [p2 charge];
+                int radius = [p1 radius];
                 
-                float forceMagnitude = charge1 * charge2 / mass * \
-                powf(-(_deltaT/rLength), (float)(i+1)) * \
+                float forceMagnitude = charge1 * charge2 * \
+                powf(-(_deltaT/(radius*rLength)), (float)(i+1)) * \
                 1.0f/(i+1);
                 
                 force = [force add:[Vector2D mult:forceDirection with:forceMagnitude]];
@@ -184,7 +184,7 @@
     for (Particle *particle in _listOfParticles) {
         CGContextSetAlpha(context, particle.alpha);
         CGContextSetFillColorWithColor(context, particle.color.CGColor);
-        CGContextFillEllipseInRect(context, CGRectMake(particle.displacement.x, particle.displacement.y, _particleSize, _particleSize));
+        CGContextFillEllipseInRect(context, CGRectMake(particle.displacement.x, particle.displacement.y, particle.radius*10, particle.radius*10));
     }
 }
 @end
