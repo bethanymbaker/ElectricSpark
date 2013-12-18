@@ -11,6 +11,4 @@
 #import "Proton.h"
 
 @interface Neutron : Particle
-@property Proton *proton;
-@property Electron *electron;
 @end

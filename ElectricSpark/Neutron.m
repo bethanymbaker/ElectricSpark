@@ -14,10 +14,10 @@
     self = [super initWithLocationOfTouch:locationOfTouch];
     if (self) {
         self.radius = 11;
-        self.color = [UIColor yellowColor];
-        self.charge = 0.0f;
-        self.electron = [[Electron alloc]initWithLocationOfTouch:locationOfTouch];
-        self.proton = [[Proton alloc]initWithLocationOfTouch:locationOfTouch];
+        self.green = 1.0f;
+        self.alpha = (float)drand48();
+        self.color = [UIColor colorWithRed:self.red green:self.green blue:self.blue alpha:self.alpha];
+        self.charge = 0;
     }
     return self;
 }

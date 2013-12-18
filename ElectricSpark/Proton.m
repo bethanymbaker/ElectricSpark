@@ -13,9 +13,11 @@
 {
     self = [super initWithLocationOfTouch:locationOfTouch];
     if (self) {
+        self.red = 1.0f;
+        self.alpha = (float)drand48();
         self.radius = 10;
-        self.charge = 1.0f;
-        self.color = [UIColor redColor];
+        self.charge = 1;
+        self.color = [UIColor colorWithRed:self.red green:self.green blue:self.blue alpha:self.alpha];
     }
     return self;
 }

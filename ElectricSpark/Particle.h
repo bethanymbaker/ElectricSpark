@@ -11,12 +11,15 @@
 
 @interface Particle : NSObject
 
-@property float charge;
+@property float red;
+@property float blue;
+@property float green;
+@property int charge;
 @property int radius;
 @property Vector2D *displacement;
 @property UIColor *color;
 @property Vector2D *force;
 @property float alpha;
 - (id)initWithLocationOfTouch:(CGPoint)locationOfTouch;
-
+- (id)initWithParticle:(Particle *)p1 andParticle:(Particle *)p2;
 @end
