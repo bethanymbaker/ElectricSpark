@@ -135,13 +135,12 @@
             }
         } else {
             if ([p1 charge] && [p2 charge]) {
-                for (int i = 0; i<_numberOfTaylorSeriesTerms; i++) {
+                for (int n = 1; n<_numberOfTaylorSeriesTerms; n++) {
                     float rLength = [r length];
                     Vector2D *forceDirection = [r normalize];
-                    float forceMagnitude = [p1 charge] * [p2 charge] * \
-                    1.0f/powf([p1 radius], (float)(i+2)) * \
-                    powf(-(_deltaT/rLength), (float)(i+1)) * \
-                    1.0f/(i+1);
+                    float forceMagnitude = ([p1 charge]*[p2 charge]/n) * \
+                    powf((-1.0/[p1 radius]), (float)(n+1)) * \
+                    powf(_deltaT/rLength, (float)(n));
                     
                     force = [force add:[Vector2D mult:forceDirection with:forceMagnitude]];
                 }
