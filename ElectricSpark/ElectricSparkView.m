@@ -196,8 +196,8 @@
     for (Particle *particle in _listOfParticles) {
         CGContextSetAlpha(context, particle.alpha);
         CGContextSetFillColorWithColor(context, particle.color.CGColor);
-        CGContextSetStrokeColorWithColor(context, particle.color.CGColor);
-        CGContextStrokeEllipseInRect(context, CGRectMake(particle.displacement.x, particle.displacement.y, _particleSize, _particleSize));
+        //CGContextSetStrokeColorWithColor(context, particle.color.CGColor);
+        //CGContextStrokeEllipseInRect(context, CGRectMake(particle.displacement.x, particle.displacement.y, _particleSize, _particleSize));
         CGContextFillEllipseInRect(context, CGRectMake(particle.displacement.x, particle.displacement.y, _particleSize, _particleSize));
     }
 }
