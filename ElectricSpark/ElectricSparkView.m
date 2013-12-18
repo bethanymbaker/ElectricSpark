@@ -12,13 +12,12 @@
 #import "Vector2D.h"
 #import "Particle.h"
 #import "Neutron.h"
-#import "Hydrogen.h"
 
 @interface ElectricSparkView ()
 @property (nonatomic) CGPoint locationOfTouch;
 @property (strong, nonatomic) NSMutableArray *listOfParticles;
 @property (nonatomic) float deltaT;
-@property (nonatomic) float timeSpeedUpFactor;
+@property (nonatomic) int timeSpeedUpFactor;
 @property (nonatomic) UITapGestureRecognizer *singleTapRecognizer;
 @property (nonatomic) UITapGestureRecognizer *doubleTapRecognizer;
 @property (nonatomic) UILongPressGestureRecognizer *longPressRecognizer;
@@ -35,9 +34,9 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
-        _simulateAntimatter = YES;
-        _timeSpeedUpFactor = 20.0f;
-        _deltaT = 0.1f;
+        _simulateAntimatter = NO;
+        _timeSpeedUpFactor = 10;
+        _deltaT = 0.25f;
         _timeInterval = _deltaT/_timeSpeedUpFactor;
         _hydrogenAtomsMayForm = YES;
         _numberOfTaylorSeriesTerms = 10;
@@ -126,53 +125,31 @@
 - (Vector2D *)calculateForceOn:(id)p1 dueTo:(id)p2
 {
     Vector2D *force = [[Vector2D alloc]init];
-    
     if (![p1 isEqual:p2]) {
         Vector2D *r = [Vector2D sub:[p2 displacement] with:[p1 displacement]];
-        float rLength = [r length];
-        
         if ([r isZero]) {
-            
-            // Make hydrogen atom
-            if ([[p1 class]isSubclassOfClass:[Proton class]]) {
-                if ([[p2 class]isSubclassOfClass:[Electron class]]) {
-                    CGPoint locationOfTouch = CGPointMake([p1 displacement].x, [p1 displacement].y);
-                    Hydrogen *hydrogen = [[Hydrogen alloc]initWithLocationOfTouch:locationOfTouch];
-                    [_listOfParticles removeObject:p1];
-                    [_listOfParticles removeObject:p2];
-                    [_listOfParticles addObject:hydrogen];
-                    return force;
-                }
-            } else if ([[p1 class]isSubclassOfClass:[Electron class]]) {
-                if ([[p2 class]isSubclassOfClass:[Proton class]]) {
-                    CGPoint locationOfTouch = CGPointMake([p2 displacement].x, [p2 displacement].y);
-                    Hydrogen *hydrogen = [[Hydrogen alloc]initWithLocationOfTouch:locationOfTouch];
-                    [_listOfParticles removeObject:p1];
-                    [_listOfParticles removeObject:p2];
-                    [_listOfParticles addObject:hydrogen];
-                    return force;
-                }
-                
+            // Make new particle
+            Particle *particle = [[Particle alloc]initWithParticle:p1 andParticle:p2];
+            if (particle) {
+                [_listOfParticles removeObject:p1];
+                [_listOfParticles removeObject:p2];
+                [_listOfParticles addObject:particle];
             }
-        }
-        float mass = [p1 mass];
-        Vector2D *forceDirection = [r normalize];
-        
-        if (![[p1 class]isSubclassOfClass:[Neutron class]] && \
-            ![[p2 class]isSubclassOfClass:[Neutron class]]) {
-            for (int i = 0; i<_numberOfTaylorSeriesTerms; i++) {
-                float charge1 = [p1 charge];
-                float charge2 = [p2 charge];
-                
-                float forceMagnitude = charge1 * charge2 / mass * \
-                powf(-(_deltaT/rLength), (float)(i+1)) * \
-                1.0f/(i+1);
-                
-                force = [force add:[Vector2D mult:forceDirection with:forceMagnitude]];
+        } else {
+            if ([p1 charge] && [p2 charge]) {
+                for (int i = 0; i<_numberOfTaylorSeriesTerms; i++) {
+                    float rLength = [r length];
+                    Vector2D *forceDirection = [r normalize];
+                    float forceMagnitude = [p1 charge] * [p2 charge] * \
+                    powf(-(_deltaT/([p1 radius]*rLength)), (float)(i+1)) * \
+                    1.0f/(i+1);
+                    
+                    force = [force add:[Vector2D mult:forceDirection with:forceMagnitude]];
+                }
             }
         }
     }
-    return force;
+    return  force;
 }
 - (void)drawRect:(CGRect)rect
 {
@@ -184,6 +161,7 @@
     for (Particle *particle in _listOfParticles) {
         CGContextSetAlpha(context, particle.alpha);
         CGContextSetFillColorWithColor(context, particle.color.CGColor);
+        //CGContextFillEllipseInRect(context, CGRectMake(particle.displacement.x, particle.displacement.y, particle.radius, particle.radius));
         CGContextFillEllipseInRect(context, CGRectMake(particle.displacement.x, particle.displacement.y, _particleSize, _particleSize));
     }
 }
