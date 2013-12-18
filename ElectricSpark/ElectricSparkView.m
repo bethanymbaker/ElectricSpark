@@ -69,16 +69,12 @@
     CGPoint location = [recognizer locationInView:[recognizer.view self]];
     Particle *particle;
     
-    if ([recognizer isEqual:_singleTapRecognizer]) {
-        if (recognizer.state == UIGestureRecognizerStateEnded) {
+    if (recognizer.state == UIGestureRecognizerStateEnded) {
+        if ([recognizer isEqual:_singleTapRecognizer]) {
             particle = [[Electron alloc]initWithLocationOfTouch:location];
-        }
-    } else if ([recognizer isEqual:_doubleTapRecognizer]) {
-        if (recognizer.state == UIGestureRecognizerStateEnded) {
+        } else if ([recognizer isEqual:_doubleTapRecognizer]) {
             particle = [[Proton alloc]initWithLocationOfTouch:location];
-        }
-    } else if ([recognizer isEqual:_longPressRecognizer]) {
-        if (recognizer.state == UIGestureRecognizerStateEnded) {
+        } else if ([recognizer isEqual:_longPressRecognizer]) {
             particle = [[Neutron alloc]initWithLocationOfTouch:location];
         }
     }
